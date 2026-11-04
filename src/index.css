@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/*
+  Tema de acessibilidade.
+  Todas as cores de texto/fundo daqui são verificadas (contraste mínimo 4.5:1,
+  WCAG AA) pelo teste src/tests/contraste.test.ts. Se mudar uma cor, rode os testes.
+*/
+@theme {
+  --font-sans: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --color-fundo: #faf7f0;
+  --color-papel: #ffffff;
+  --color-texto: #1c1b1a;
+  --color-texto-suave: #4a4743;
+  --color-borda: #8c857b;
+
+  --color-primaria: #17468f;
+  --color-primaria-escura: #0f3169;
+  --color-primaria-clara: #e3ecf9;
+
+  --color-perigo: #a8201a;
+  --color-perigo-escura: #7f1712;
+  --color-perigo-clara: #fdeceb;
+
+  --color-sucesso: #17653a;
+  --color-sucesso-escura: #104a2a;
+  --color-sucesso-clara: #e4f4ea;
+
+  --color-atencao: #7a4b00;
+  --color-atencao-clara: #fff3d6;
+
+  --color-foco: #ffb400;
+}
+
+@layer base {
+  html {
+    /* O tamanho da letra é definido pelos botões A- / A+ (variável --tamanho-letra).
+       Tudo usa "rem", então todo o app cresce junto. */
+    font-size: var(--tamanho-letra, 20px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-fundo);
+    color: var(--color-texto);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: anywhere;
+  }
+
+  /* Foco bem visível para quem usa teclado: anel preto com folga amarela. */
+  :focus-visible {
+    outline: 4px solid #000;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 7px var(--color-foco);
+  }
+
+  /* Títulos recebem foco por código ao abrir a tela; não são controles, então sem anel. */
+  [tabindex="-1"]:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  button,
+  [role="button"],
+  [role="checkbox"],
+  [role="radio"],
+  a {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
